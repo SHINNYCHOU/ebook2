@@ -13,7 +13,7 @@ public class Caeser {
             return;
         }
         try { FileInputStream in = new FileInputStream(args[0]);
-            FileOutputStream out = new FileOutputStream(args[1]);
+            FileOutputStream out = new FileOutputStream(args[1]);//输入文件+.caesar
             int key = Integer.parseInt(args[2]);
             int ch;
             while ((ch = in.read()) != -1) {
@@ -27,17 +27,17 @@ public class Caeser {
             exception.printStackTrace();
         }
     }
-    public void runClass(String name, String key) {
-        try {
-            ClassLoader loader = new myclassloader(Integer.parseInt(key));
-            Class c = loader.loadClass(name);
-            String[] args = new String[] {};
-            Method m = c.getMethod("main", args.getClass());
-            m.invoke(null, (Object) args);
-        }
-        catch (Throwable e) {
+//    public void runClass(String name, String key) {
+//        try {
+//            ClassLoader loader = new myclassloader(Integer.parseInt(key));
+//            Class c = loader.loadClass(name);
+//            String[] args = new String[] {};
+//            Method m = c.getMethod("main", args.getClass());
+//            m.invoke(null, (Object) args);
+//        }
+//        catch (Throwable e) {
 //            JOptionPane.showMessageDialog(this, e);
-        }
-    }
+//        }
+//    }
 }
 
