@@ -1,5 +1,8 @@
 package com.ebook.demo.controller;
 
+import org.springframework.beans.factory.annotation.Required;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.bind.annotation.*;
@@ -62,40 +65,42 @@ public class Order_itemController {
         System.out.println(price);
         //String id=oid+book;
         //System.out.println(id);
-        order_items o=new order_items(oid,book,price,number);
-        System.out.println(o);
+//        order_items o=new order_items(oid,book,price,number);
+//        System.out.println(o);
         /*o.setBook_isbn(book);
         o.setNumber(number);
         o.setPrice(price);
         o.setOrderId(oid);*/
-        return order_itemService.insert(o);
+        return order_itemService.insert(oid,book,price,number);
     }
+
+    @Transactional(propagation= Propagation.REQUIRED)
     @PostMapping(value = "/insertList/{oid}")
     public int insertOrder(@PathVariable(value = "oid" ) String oid,
                             @RequestParam(value = "book_isbn") String bookList,
                             @RequestParam(value = "priceList") String priceList,
                             @RequestParam(value = "numberList") String numberList){
-        List<String> books=getList(bookList,2);
-        List<Double> prices=getList(priceList,3);
-        List<Integer> numbers=getList(numberList,1);
-        List<order_items> insertList=new ArrayList<>();
-        for(int i = 0;i<books.size();i++){
-            order_items orderitem=new order_items(oid,books.get(i),prices.get(i),numbers.get(i));
-            insertList.add(orderitem);
-            order_itemService.insert(orderitem);
-        }
+//        List<String> books=getList(bookList,2);
+//        List<Double> prices=getList(priceList,3);
+//        List<Integer> numbers=getList(numberList,1);
+//        List<order_items> insertList=new ArrayList<>();
+//        for(int i = 0;i<books.size();i++){
+//            order_items orderitem=new order_items(oid,books.get(i),prices.get(i),numbers.get(i));
+//            insertList.add(orderitem);
+//            order_itemService.insert(orderitem);
+//        }
         //order_itemService.insert(insertList);
-        return insertList.size();
+        return order_itemService.insertList(oid,bookList,priceList,numberList);
     }
-    public static String getOrderIdByUUId() {
-        int machineId = 1;//最大支持1-9个集群机器部署
-        int hashCodeV = UUID.randomUUID().toString().hashCode();
-        if(hashCodeV < 0) {//有可能是负数
-            hashCodeV = - hashCodeV;
-        }
-//         0 代表前面补充0
-//         4 代表长度为4
-//         d 代表参数为正数型
-        return  machineId+ String.format("%015d", hashCodeV);
-    }
+//    public static String getOrderIdByUUId() {
+//        int machineId = 1;//最大支持1-9个集群机器部署
+//        int hashCodeV = UUID.randomUUID().toString().hashCode();
+//        if(hashCodeV < 0) {//有可能是负数
+//            hashCodeV = - hashCodeV;
+//        }
+////         0 代表前面补充0
+////         4 代表长度为4
+////         d 代表参数为正数型
+//        return  machineId+ String.format("%015d", hashCodeV);
+//    }
 }

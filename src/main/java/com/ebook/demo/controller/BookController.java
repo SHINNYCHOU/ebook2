@@ -33,7 +33,7 @@ public class BookController {
         return bookService.findByIsbn(isbn);
     }
 
-    @GetMapping(value = "/get/{name}")
+    @GetMapping(value = "/getname/{name}")
     public book_info findByName(@PathVariable(value = "name") String name)
     {
         return bookService.findByName(name);

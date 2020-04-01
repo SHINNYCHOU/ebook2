@@ -35,14 +35,32 @@ public class OrderController {
         Timestamp time2 = Timestamp.valueOf(t2);
         return orderservice.findOneTime(time1,time2,uid);
     }
+
+    //单种书籍下单
     @PostMapping(value = "/add/{uid}")
-    public order addByOrder(@PathVariable(value = "uid") String uid,
-                            @RequestParam(value = "price") double price){
-        String id=getOrderIdByTime();
-        Timestamp time= new Timestamp(System.currentTimeMillis());
-        order o=new order(id,uid,price,"unpay",time);
-        return orderservice.insertByOrder(o);
+    public order addOne(@PathVariable(value = "uid") String uid,
+                            @RequestParam(value = "book_isbn") String book,
+                            @RequestParam(value = "price") double price,
+                            @RequestParam(value = "number") int number){
+//        String id=getOrderIdByTime();
+//        Timestamp time= new Timestamp(System.currentTimeMillis());
+//        order o=new order(id,uid,price,"unpay",time);
+        return orderservice.insert(uid,price,number,book);
     }
+
+//    list下单
+    @PostMapping(value = "/addList/{uid}")
+    public order addByList(@PathVariable(value = "uid") String uid,
+                           @RequestParam(value = "price") double price,
+                            @RequestParam(value = "book_isbn") String bookList,
+                           @RequestParam(value = "priceList") String priceList,
+                            @RequestParam(value = "numberList") String numberList){
+//        return orderservice.insert(uid,price,number,book);
+        return orderservice.insertList(uid,bookList,priceList,numberList,price);
+    }
+
+
+
     @PutMapping(value = "/update/{id}")
     public order update(@PathVariable(value = "id") String id,
                             @RequestParam(value = "state") String state){
@@ -50,14 +68,14 @@ public class OrderController {
         o.setState(state);
         return orderservice.update(o);
     }
-    public static String getOrderIdByTime() {
-        SimpleDateFormat sdf=new SimpleDateFormat("yyyyMMddHHmmss");
-        String newDate=sdf.format(new Date());
-        String result="";
-        Random random=new Random();
-        for(int i=0;i<3;i++){
-            result=result+random.nextInt(10);
-        }
-        return newDate+result;
-    }
+//    public static String getOrderIdByTime() {
+//        SimpleDateFormat sdf=new SimpleDateFormat("yyyyMMddHHmmss");
+//        String newDate=sdf.format(new Date());
+//        String result="";
+//        Random random=new Random();
+//        for(int i=0;i<3;i++){
+//            result=result+random.nextInt(10);
+//        }
+//        return newDate+result;
+//    }
 }
