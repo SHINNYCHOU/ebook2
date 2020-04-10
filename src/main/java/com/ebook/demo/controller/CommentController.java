@@ -10,15 +10,19 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.beans.factory.annotation.Autowired;
+
+import java.io.Serializable;
 import java.util.List;
 
 @CrossOrigin(origins = {"http://localhost:8081","null"},allowCredentials = "true")
 @RestController
 @RequestMapping(value="/comment",method = {RequestMethod.GET, RequestMethod.PUT,RequestMethod.DELETE,RequestMethod.POST})
 @Transactional
-public class CommentController {
+public class CommentController{
     @Autowired
     commentServiceImpl commentService;
+
+
     @GetMapping(value = "/get/{book_isbn}")
     public bookcomment getComment(@PathVariable(value = "book_isbn") String isbn){
         return commentService.findByIsbn(isbn);

@@ -2,6 +2,7 @@ package com.ebook.demo.service;
 
 import com.ebook.demo.base.book_info;
 import com.ebook.demo.Repository.bookRepository;
+import com.ebook.demo.dao.bookDao;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -11,7 +12,7 @@ import java.util.List;
 @Transactional
 public class bookServiceImpl implements bookService{
     @Autowired
-    private bookRepository bookDao;
+    private bookDao bookDao;
 
     @Override
     public List<book_info> findAll() {
@@ -20,13 +21,13 @@ public class bookServiceImpl implements bookService{
 
     @Override
     public book_info insertByBook(book_info book) {
-        bookDao.save(book);
+        bookDao.insertByBook(book);
         return book;
     }
 
     @Override
     public book_info update(book_info book) {
-        bookDao.save(book);
+        bookDao.update(book);
         return book;
     }
 
@@ -34,7 +35,7 @@ public class bookServiceImpl implements bookService{
     public void delete(String isbn) {
         System.out.println("ser:");
         System.out.println(isbn);
-        bookDao.deleteById(isbn);
+        bookDao.delete(isbn);
     }
 
     @Override
@@ -44,7 +45,7 @@ public class bookServiceImpl implements bookService{
 
     @Override
     public book_info findByIsbn(String id) {
-        return bookDao.getOne(id);
+        return bookDao.findByIsbn(id);
     }
 
 

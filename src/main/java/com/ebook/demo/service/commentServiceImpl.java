@@ -23,6 +23,7 @@ public class commentServiceImpl implements commentService{
     public bookcomment findByIsbn(String isbn){
         return commentRepository.findByIsbn(isbn);
     }
+
     public comment saveComment(String isbn,String fatherId,String content,String user){
         System.out.println("enter s");
         //bookcomment bookcomment=new bookcomment(isbn);

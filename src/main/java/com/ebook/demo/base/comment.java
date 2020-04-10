@@ -1,14 +1,18 @@
 package com.ebook.demo.base;
 
+import org.apache.solr.client.solrj.beans.Field;
 import org.springframework.data.annotation.Id;
 
+import java.io.Serializable;
 import java.sql.Timestamp;
 import java.util.Date;
 import java.util.List;
 
-public class comment {
+public class comment implements Serializable {
+    @Field("id")
     @Id
     private String id;
+
     private String father;
     private String user;
     private String content;
